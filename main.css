@@ -1,0 +1,21 @@
+body {
+    text-align: center;
+
+}
+
+#data-table {
+    display: flex;
+    justify-content: center;
+}
+
+table, th, td
+{
+    margin: 10px 0;
+    padding: 2px 4px;
+    font: 15px Helvetica, sans-serif;
+}
+th {
+    font-weight:bold;
+    background: lightseagreen;
+    padding: 10px 15px;
+}
