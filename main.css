@@ -19,3 +19,11 @@ th {
     background: lightseagreen;
     padding: 10px 15px;
 }
+
+.search {
+    padding-bottom: 10px;
+}
+
+#search_input {
+    padding: 5px 15px;
+}

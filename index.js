@@ -1,105 +1,134 @@
-
-    let verbs = [
-        {
-            "Infinitive": "to be",
-            "Past Simple": "was/were",
-            "Past Participle": "been",
-            "Translation": "бути"
-        },
-        {
-            "Infinitive": "to become",
-            "Past Simple": "became",
-            "Past Participle": "become",
-            "Translation": "ставати"
-        },
-        {
-            "Infinitive": "to begin",
-            "Past Simple": "began",
-            "Past Participle": "begun",
-            "Translation": "починати"
-        },
-        {
-            "Infinitive": "to brake",
-            "Past Simple": "broke",
-            "Past Participle": "broken",
-            "Translation": "ламати"
-        },
-        {
-            "Infinitive": "to bring",
-            "Past Simple": "brought",
-            "Past Participle": "brought",
-            "Translation": "приносити"
-        },
-        {
-            "Infinitive": "to build",
-            "Past Simple": "built",
-            "Past Participle": "built",
-            "Translation": "будувати"
-        },
-        {
-            "Infinitive": "to buy",
-            "Past Simple": "bought",
-            "Past Participle": "bought",
-            "Translation": "купувати"
-        },
-        {
-            "Infinitive": "can",
-            "Past Simple": "could",
-            "Past Participle": "could",
-            "Translation": "могти"
-        },
-        {
-            "Infinitive": "to choose",
-            "Past Simple": "chose",
-            "Past Participle": "chosen",
-            "Translation": "вибирати"
-        },
-        {
-            "Infinitive": "to come",
-            "Past Simple": "came",
-            "Past Participle": "come",
-            "Translation": "приходити"
-        }
-    ]
-
-    // make an array of headers of the table
-
-    let columns = [];
-    for (let i = 0; i < verbs.length; i++) {
-        for (let key in verbs[i]) {
-            if (columns.indexOf(key) === -1) {
-                columns.push(key);
-            }
-        }
+const verbs = [
+    {
+        Infinitive: 'to be',
+        Past_Simple: 'was/were',
+        Past_Participle: 'been',
+        Translation: 'бути'
+    },
+    {
+        Infinitive: 'to become',
+        Past_Simple: 'became',
+        Past_Participle: "become",
+        Translation: 'ставати'
+    },
+    {
+        Infinitive: 'to begin',
+        Past_Simple: 'began',
+        Past_Participle: 'begun',
+        Translation: 'починати'
+    },
+    {
+        Infinitive: 'to brake',
+        Past_Simple: 'broke',
+        Past_Participle: 'broken',
+        Translation: 'ламати'
+    },
+    {
+        Infinitive: 'to bring',
+        Past_Simple: 'brought',
+        Past_Participle: 'brought',
+        Translation: 'приносити'
+    },
+    {
+        Infinitive: 'to build',
+        Past_Simple: 'built',
+        Past_Participle: 'built',
+        Translation: 'будувати'
+    },
+    {
+        Infinitive: 'to buy',
+        Past_Simple: 'bought',
+        Past_Participle: 'bought',
+        Translation: 'купувати'
+    },
+    {
+        Infinitive: 'can',
+        Past_Simple: 'could',
+        Past_Participle: 'could',
+        Translation: 'могти'
+    },
+    {
+        Infinitive: 'to choose',
+        Past_Simple: 'chose',
+        Past_Participle: 'chosen',
+        Translation: 'вибирати'
+    },
+    {
+        Infinitive: 'to come',
+        Past_Simple: 'came',
+        Past_Participle: 'come',
+        Translation: 'приходити'
     }
+];
 
-    // creating table and rows
+// make an array of headers of the table
 
-    let table = document.createElement("table");
+const columns = [
+    {
+        key: 'Infinitive',
+        title: 'Infinitive',
+    },
+    {
+        key: 'Past_Simple',
+        title: 'Past Simple',
+    },
+    {
+        key: 'Past_Participle',
+        title: 'Past Participle',
+    },
+    {
+        key: 'Translation',
+        title: 'Translation',
+    },
+];
 
-    let tr = table.insertRow(-1);
 
-    for (let i = 0; i < columns.length; i++) {
-        let th = document.createElement("th");
-        th.innerHTML = columns[i];
+// creating table and rows
+
+
+// sending data to div with id="data-table"
+
+const container = document.getElementById('data-table');
+const search = document.getElementById('search-input');
+
+search.addEventListener('keyup', handleChangeSearch, false);
+
+renderTable(verbs);
+
+
+function renderTable(data) {
+    const table = document.createElement('table');
+    const tr = table.insertRow(-1);
+
+    columns.forEach(column => {
+        const th = document.createElement('th');
+        th.innerHTML = column.title;
         tr.appendChild(th);
-    }
-
+    });
 
     // adding verbs to rows of table
 
-    for (let i = 0; i < verbs.length; i++) {
+    data.forEach(verb => {
+        const tr = table.insertRow(-1);
 
-        tr = table.insertRow(-1);
+        columns.forEach(column => {
+            const tabCell = tr.insertCell(-1);
+            tabCell.innerHTML = verb[column.key];
+        });
+    });
 
-        for (let j = 0; j < columns.length; j++) {
-            let tabCell = tr.insertCell(-1);
-            tabCell.innerHTML = verbs[i][columns[j]];
-        }
-    }
-
-    // sending data to div with id="data-table"
-    
-    let container = document.getElementById("data-table");
-    container.innerHTML = "";
+    container.innerHTML = '';
     container.appendChild(table);
+}
+
+
+function handleChangeSearch() {
+    const filter = search.value.toUpperCase();
+
+    const data = verbs.filter(verb => (
+        filter.length < 3 ||
+        columns.some(column => verb[column.key].toUpperCase().includes(filter))
+    ));
+
+    renderTable(data);
+}
